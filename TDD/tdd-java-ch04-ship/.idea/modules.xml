@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/tdd-java-ch04-ship.iml" filepath="$PROJECT_DIR$/tdd-java-ch04-ship.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tdd-java-ch04-ship_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tdd-java-ch04-ship_main.iml" group="tdd-java-ch04-ship" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tdd-java-ch04-ship_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tdd-java-ch04-ship_test.iml" group="tdd-java-ch04-ship" />
+    </modules>
+  </component>
+</project>
