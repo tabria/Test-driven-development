@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" tests="12" skipped="0" failures="0" errors="0" timestamp="2018-03-01T12:48:01" hostname="arama-PC" time="0.018">
+  <properties/>
+  <testcase name="whenFirstTurnThenXPlayerTurn" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.006"/>
+  <testcase name="whenNoWinningRuleThenNoWinner" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.0"/>
+  <testcase name="whenPrimaryDiagonalWinThenHaveWinner" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.001"/>
+  <testcase name="whenAllBoxesFilledThenEndGame" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.0"/>
+  <testcase name="whenSecondaryDiagonalWinThenHaveWinner" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.0"/>
+  <testcase name="whenHorizontalWinningLineExistThenHaveWinner" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.0"/>
+  <testcase name="whenLastPlayerXThen0PlayerTurn" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.0"/>
+  <testcase name="whenLastPlayer0ThenXPlayerTurn" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.0"/>
+  <testcase name="whenPieceOutsideXThenThrowRuntimeException" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.009"/>
+  <testcase name="whenPieceOutsideYThenThrowRuntimeException" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.001"/>
+  <testcase name="whenPieceOnOccupiedSpaceThenThrowRuntimeException" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.0"/>
+  <testcase name="whenVerticalWinningLineExistThenHaveWinner" classname="com.packtpublishing.tddjava.ch03tictactoe.TicTacToeSpec" time="0.0"/>
+  <system-out><![CDATA[X is the winner
+X is the winner
+X is the winner
+X is the winner
+X is the winner
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

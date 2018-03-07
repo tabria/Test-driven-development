@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicTacToe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tddjava-java-ch03-tic-tac-toe</a> &gt; <a href="index.source.html" class="el_package">com.packtpublishing.tddjava.ch03tictactoe</a> &gt; <span class="el_source">TicTacToe.java</span></div><h1>TicTacToe.java</h1><pre class="source lang-java linenums">package com.packtpublishing.tddjava.ch03tictactoe;
+
+public class TicTacToe {
+
+    private static final String NO_WINNER = &quot;No winner&quot;;
+    private static final int START_POSITION = 1;
+    private static final int END_POSITION = 3;
+    private static final String PIECE_OUTSIDE_BOARD = &quot;Piece is outside the board&quot;;
+    private static final String POSITION_OCCUPIED = &quot;Position is occupied&quot;;
+    private static final String WINNER_PLAYER = &quot; is the winner&quot;;
+    private static final String PLAYER_X = &quot;X&quot;;
+    private static final String PLAYER_0 = &quot;0&quot;;
+
+<span class="fc" id="L14">    private Character[][] board = {{'\0','\0','\0'}, {'\0','\0','\0'}, {'\0','\0','\0'}};</span>
+    private String player;
+    private String winner;
+    private int turns;
+
+<span class="fc" id="L19">    public TicTacToe() {</span>
+<span class="fc" id="L20">        this.player = &quot;&quot;;</span>
+<span class="fc" id="L21">        this.setWinner(NO_WINNER);</span>
+<span class="fc" id="L22">        this.turns = this.board.length * this.board.length;</span>
+<span class="fc" id="L23">    }</span>
+
+    public String getPlayer() {
+<span class="fc" id="L26">        return this.player;</span>
+    }
+
+    public String getWinner() {
+<span class="fc" id="L30">        return winner;</span>
+    }
+
+    public void play(int x, int y){
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (winner.equals(NO_WINNER)){</span>
+<span class="fc" id="L35">            checkAxis(x);</span>
+<span class="fc" id="L36">            checkAxis(y);</span>
+<span class="fc" id="L37">            nextPlayer();</span>
+<span class="fc" id="L38">            setBox(x, y);</span>
+<span class="fc" id="L39">            turns--;</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            if (isGameEnd()){</span>
+<span class="fc" id="L41">                System.out.println(winner);</span>
+            }
+        }
+<span class="fc" id="L44">    }</span>
+
+
+    public boolean isGameEnd(){
+<span class="fc" id="L48">        String win = winnerRules();</span>
+<span class="fc" id="L49">        setWinner(win);</span>
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">        return turns &lt; 1 || !win.equals(NO_WINNER);</span>
+    }
+
+    private String winnerRules(){
+<span class="fc" id="L54">        String win = winnerByHorizontalLine();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (win.equals(NO_WINNER)){</span>
+<span class="fc" id="L56">            win = winnerByVerticalLine();</span>
+        }
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (win.equals(NO_WINNER)) {</span>
+<span class="fc" id="L59">            win =  winnerByPrimaryDiagonal();</span>
+        }
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (win.equals(NO_WINNER)) {</span>
+<span class="fc" id="L62">            win =  winnerBySecondaryDiagonal();</span>
+        }
+<span class="fc" id="L64">        return win;</span>
+    }
+
+    private void setWinner(String winner) {
+<span class="fc" id="L68">        this.winner = winner;</span>
+<span class="fc" id="L69">    }</span>
+
+
+    private String winnerByPrimaryDiagonal(){
+<span class="fc" id="L73">        int charSum = 0;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (int i = 0; i &lt; END_POSITION ; i++) {</span>
+<span class="fc" id="L75">            charSum += board[i][i];</span>
+        }
+<span class="fc" id="L77">        char playerChar = player.charAt(0);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (charSum == playerChar * 3){</span>
+<span class="fc" id="L79">            return player + WINNER_PLAYER;</span>
+        }
+<span class="fc" id="L81">        return NO_WINNER;</span>
+    }
+
+    private String winnerBySecondaryDiagonal(){
+<span class="fc" id="L85">        int charSum = 0;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (int i = END_POSITION; i &gt;= START_POSITION; i--) {</span>
+<span class="fc" id="L87">            charSum += board[END_POSITION - i][i - 1];</span>
+        }
+<span class="fc" id="L89">        char playerChar = player.charAt(0);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (charSum == playerChar * 3){</span>
+<span class="fc" id="L91">            return player + WINNER_PLAYER;</span>
+        }
+<span class="fc" id="L93">        return NO_WINNER;</span>
+    }
+
+    private String winnerByHorizontalLine(){
+<span class="fc" id="L97">        boolean isWinner = false;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for (int i = 0; i &lt; END_POSITION ; i++) {</span>
+<span class="fc" id="L99">            char lineSymbol = board[i][i];</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            if (lineSymbol != '\0'){</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">                for(int k = 1; k &lt; END_POSITION; k++){</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">                    if (board[i][k] == lineSymbol){</span>
+<span class="fc" id="L103">                        isWinner = true;</span>
+                    } else {
+<span class="fc" id="L105">                        isWinner = false;</span>
+<span class="fc" id="L106">                        break;</span>
+                    }
+                }
+            }
+<span class="fc bfc" id="L110" title="All 2 branches covered.">            if (isWinner){</span>
+<span class="fc" id="L111">                return Character.toString(lineSymbol) + WINNER_PLAYER;</span>
+            }
+        }
+<span class="fc" id="L114">        return NO_WINNER;</span>
+    }
+
+    private String winnerByVerticalLine(){
+<span class="fc" id="L118">        boolean isWinner = false;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        for (int k = 0; k &lt; END_POSITION ; k++) {</span>
+<span class="fc" id="L120">            char lineSymbol = board[k][k];</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">            if (lineSymbol !='\0'){</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                for (int i = 0; i &lt;END_POSITION ; i++) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">                    if (board[i][k] == lineSymbol){</span>
+<span class="fc" id="L124">                        isWinner = true;</span>
+                    } else {
+<span class="fc" id="L126">                        isWinner = false;</span>
+<span class="fc" id="L127">                        break;</span>
+                    }
+                }
+            }
+<span class="fc bfc" id="L131" title="All 2 branches covered.">            if (isWinner){</span>
+<span class="fc" id="L132">                return Character.toString(lineSymbol) + WINNER_PLAYER;</span>
+            }
+        }
+<span class="fc" id="L135">        return NO_WINNER;</span>
+    }
+
+    private void nextPlayer(){
+<span class="fc bfc" id="L139" title="All 4 branches covered.">        if (player.isEmpty() || player.equals(PLAYER_0)){</span>
+<span class="fc" id="L140">            player = PLAYER_X;</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        } else if (player.equals(PLAYER_X)){</span>
+<span class="fc" id="L142">            player = PLAYER_0;</span>
+        }
+<span class="fc" id="L144">    }</span>
+
+    private void checkAxis(int axis){
+<span class="pc bpc" id="L147" title="1 of 4 branches missed.">        if (axis &lt; START_POSITION || axis &gt; END_POSITION){</span>
+<span class="fc" id="L148">            throw new RuntimeException(PIECE_OUTSIDE_BOARD);</span>
+        }
+<span class="fc" id="L150">    }</span>
+
+    private void setBox(int x, int y){
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (board[x-1][y-1] != '\0'){</span>
+<span class="fc" id="L154">            throw  new RuntimeException(POSITION_OCCUPIED);</span>
+        } else {
+<span class="fc" id="L156">            board[x-1][y-1] = player.charAt(0); ;</span>
+        }
+<span class="fc" id="L158">    }</span>
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="connect4.Connect4TDDSpec" tests="18" skipped="0" failures="0" errors="0" timestamp="2018-03-03T18:55:04" hostname="arama-PC" time="0.027">
+  <properties/>
+  <testcase name="whenTurnEndThenReport" classname="connect4.Connect4TDDSpec" time="0.009"/>
+  <testcase name="when4DisksConnectedPrimaryDiagonalThenWinner" classname="connect4.Connect4TDDSpec" time="0.001"/>
+  <testcase name="when3DiskConnectedVerticallyThenNoWinner" classname="connect4.Connect4TDDSpec" time="0.001"/>
+  <testcase name="when4DiskConnectedHorizontallyThenWinner" classname="connect4.Connect4TDDSpec" time="0.001"/>
+  <testcase name="when3DiskConnectedHorizontallyThenNoWinner" classname="connect4.Connect4TDDSpec" time="0.0"/>
+  <testcase name="whenGameStartThenRedPlayerTurn" classname="connect4.Connect4TDDSpec" time="0.001"/>
+  <testcase name="when4DIsksConnectedSecondaryDiagonalThenWinner" classname="connect4.Connect4TDDSpec" time="0.001"/>
+  <testcase name="whenInsertDiskThenNumberOfDisksIncreased" classname="connect4.Connect4TDDSpec" time="0.002"/>
+  <testcase name="whenInsertDiskInEmptyColumnThenDiskPosition0" classname="connect4.Connect4TDDSpec" time="0.0"/>
+  <testcase name="whenInsertSecondDiskInSameColumnThenDiskPosition1" classname="connect4.Connect4TDDSpec" time="0.0"/>
+  <testcase name="whenSecondPlayerPlayThenColorIsGreen" classname="connect4.Connect4TDDSpec" time="0.001"/>
+  <testcase name="when4DisksConnectedVerticallyThenPlayerWins" classname="connect4.Connect4TDDSpec" time="0.0"/>
+  <testcase name="whenAskedForCurrentPlayerThenOutputReport" classname="connect4.Connect4TDDSpec" time="0.001"/>
+  <testcase name="whenInitBoardThenBoardIsEmpty" classname="connect4.Connect4TDDSpec" time="0.0"/>
+  <testcase name="whenGameStartThenIsFinishedIsFalse" classname="connect4.Connect4TDDSpec" time="0.0"/>
+  <testcase name="whenPutDiskOutsideRowBoundaryThenRuntimeException" classname="connect4.Connect4TDDSpec" time="0.001"/>
+  <testcase name="whenPutDiskOutsideColumnBoundaryThenRuntimeException" classname="connect4.Connect4TDDSpec" time="0.0"/>
+  <testcase name="whenAllDisksAreOnBoardThenIsFinishedIsTrue" classname="connect4.Connect4TDDSpec" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

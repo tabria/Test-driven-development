@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Connect4TDD.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TDD-connect4</a> &gt; <a href="index.source.html" class="el_package">connect4</a> &gt; <span class="el_source">Connect4TDD.java</span></div><h1>Connect4TDD.java</h1><pre class="source lang-java linenums">package connect4;
+
+
+import java.io.PrintStream;
+import java.util.StringJoiner;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class Connect4TDD {
+
+    private static final int ROWS = 6;
+    private static final int COLUMNS = 7;
+    private static final String DELIMITER = &quot;|&quot;;
+    private static final String WIN_PLAYER_SUFFIX = &quot; player wins&quot;;
+    private static final int DISKS_TO_WIN = 4;
+
+    private String[][] board;
+    private String currentPlayer;
+    private PrintStream printStream;
+    private String winner;
+
+<span class="fc" id="L22">    public Connect4TDD(PrintStream printStream) {</span>
+<span class="fc" id="L23">        this.printStream = printStream;</span>
+<span class="fc" id="L24">        this.board = new String[ROWS][COLUMNS];</span>
+<span class="fc" id="L25">        currentPlayer = PlayerColor.RED.toString();</span>
+<span class="fc" id="L26">        winner = &quot;&quot;;</span>
+<span class="fc" id="L27">    }</span>
+
+    public String getCurrentPlayer() {
+<span class="fc" id="L30">        printStream.printf(&quot;%s player turn&quot;, this.currentPlayer);</span>
+<span class="fc" id="L31">        return this.currentPlayer;</span>
+    }
+
+    public int getNumberOfDiscs(){
+<span class="fc" id="L35">        return IntStream.range(0, COLUMNS).map(this::getNumberOfDisksInColumn).sum();</span>
+    }
+
+    public int putDiskInColumn(int column){
+<span class="fc" id="L39">        checkIfColumnIsValid(column);</span>
+<span class="fc" id="L40">        int row =  getNumberOfDisksInColumn(column);</span>
+<span class="fc" id="L41">        checkIfRowIsValid(row, column);</span>
+<span class="fc" id="L42">        board[row][column] = currentPlayer;</span>
+<span class="fc" id="L43">        checkWinner(row, column);</span>
+<span class="fc" id="L44">        printBoard();</span>
+<span class="fc" id="L45">        changePlayerColor();</span>
+<span class="fc" id="L46">        return row;</span>
+    }
+
+    public boolean isFinished(){
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        return getNumberOfDiscs() &gt;= ROWS * COLUMNS;</span>
+    }
+
+    public String getWinner() {
+<span class="fc" id="L54">        return this.winner;</span>
+    }
+
+    private void checkWinner(int row, int column){
+<span class="fc" id="L58">        verticalWinner(row,column);</span>
+<span class="fc" id="L59">        horizontalWinner(row, column);</span>
+<span class="fc" id="L60">        diagonalWinner(row, column);</span>
+<span class="fc" id="L61">        secondaryDiagonalWinner(row, column);</span>
+<span class="fc" id="L62">    }</span>
+
+    private void verticalWinner(int currentRow, int currentCol){
+<span class="fc" id="L65">        int[] colorCount = {0};</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (winner.isEmpty()) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            for (int row = 0; row &lt;= currentRow; row++) {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">                if (isWinner(row, currentCol, colorCount)) {</span>
+<span class="fc" id="L69">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L73">    }</span>
+
+    private void horizontalWinner(int currentRow, int currentCol){
+<span class="fc" id="L76">        int[] colorCount = {0};</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (winner.isEmpty()){</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            for (int col = 0; col &lt;= currentCol ; col++) {</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                if (isWinner(currentRow, col, colorCount)){</span>
+<span class="fc" id="L80">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L84">    }</span>
+
+    private boolean isWinner(int row, int col, int[] colorCount){
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (board[row][col] != null){</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            colorCount[0] = board[row][col].equals(currentPlayer) ? colorCount[0]+ 1 : 0;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if (colorCount[0] &gt;= DISKS_TO_WIN){</span>
+<span class="fc" id="L90">                winner = currentPlayer + WIN_PLAYER_SUFFIX;</span>
+<span class="fc" id="L91">                return true;</span>
+            }
+        }
+<span class="fc" id="L94">        return false;</span>
+    }
+
+    private void diagonalWinner(int row, int col){
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (winner.isEmpty()){</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            int startRow = row - DISKS_TO_WIN &lt; 0 ? 0 : row - DISKS_TO_WIN;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            int startCol = col - DISKS_TO_WIN + 1 &lt; 0 ? 1 : col -DISKS_TO_WIN + 1;</span>
+<span class="fc" id="L101">            int countColor = 0;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">            for (int cycle = 0; cycle &lt;DISKS_TO_WIN ; cycle++) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">                if (board[startRow][startCol] == null){</span>
+<span class="fc" id="L104">                    break;</span>
+                }
+<span class="fc bfc" id="L106" title="All 2 branches covered.">                if (board[startRow][startCol].equals(currentPlayer)){</span>
+<span class="fc" id="L107">                    countColor++;</span>
+<span class="fc" id="L108">                    startRow++;</span>
+<span class="fc" id="L109">                    startCol++;</span>
+                }
+<span class="fc bfc" id="L111" title="All 2 branches covered.">                if (countColor &gt;= DISKS_TO_WIN){</span>
+<span class="fc" id="L112">                    winner = currentPlayer + WIN_PLAYER_SUFFIX;</span>
+<span class="fc" id="L113">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L117">    }</span>
+
+    private void secondaryDiagonalWinner(int row, int col){
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (winner.isEmpty()){</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">            int startRow = row - DISKS_TO_WIN &lt; 0 ? 0 : row - DISKS_TO_WIN;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            int startCol = col + DISKS_TO_WIN - 1 &gt;= COLUMNS ? COLUMNS-1 : col + DISKS_TO_WIN - 1;</span>
+<span class="fc" id="L123">            int countColor = 0;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            for (int cycle = 0; cycle &lt;DISKS_TO_WIN ; cycle++) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                if (board[startRow][startCol] == null){</span>
+<span class="fc" id="L126">                    break;</span>
+                }
+<span class="fc bfc" id="L128" title="All 2 branches covered.">                if (board[startRow][startCol].equals(currentPlayer)){</span>
+<span class="fc" id="L129">                    countColor++;</span>
+<span class="fc" id="L130">                    startRow++;</span>
+<span class="fc" id="L131">                    startCol--;</span>
+                }
+<span class="fc bfc" id="L133" title="All 2 branches covered.">                if (countColor &gt;= DISKS_TO_WIN){</span>
+<span class="fc" id="L134">                    winner = currentPlayer + WIN_PLAYER_SUFFIX;</span>
+<span class="fc" id="L135">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L139">    }</span>
+
+    private void printBoard(){
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        for (int row = ROWS-1; row &gt;=0 ; row--) {</span>
+<span class="fc" id="L143">            StringJoiner sj = new StringJoiner(DELIMITER, DELIMITER, DELIMITER);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            for (int column = 0; column &lt;COLUMNS-1 ; column++) {</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                if (board[row][column] != null){</span>
+<span class="fc" id="L146">                    sj.add(board[row][column]);</span>
+<span class="fc" id="L147">                    printStream.printf(sj.toString());</span>
+
+                }
+            }
+////
+////
+//            StringJoiner sj = new StringJoiner(DELIMITER, DELIMITER, DELIMITER);
+//            Stream.of(board[row]).filter(item-&gt; item !=null).forEachOrdered(sj::add);
+//            printStream.printf(sj.toString());
+        }
+
+
+<span class="fc" id="L159">    }</span>
+
+    private void changePlayerColor(){
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (currentPlayer.equals(PlayerColor.RED.toString())){</span>
+<span class="fc" id="L163">            currentPlayer = PlayerColor.GREEN.toString();</span>
+        } else {
+<span class="fc" id="L165">            currentPlayer = PlayerColor.RED.toString();</span>
+        }
+<span class="fc" id="L167">    }</span>
+
+    private int getNumberOfDisksInColumn(int column){
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">        return (int) IntStream.range(0, ROWS).filter(i -&gt; board[i][column] != null &amp;&amp; !board[i][column].isEmpty()).count();</span>
+    }
+
+    private void checkIfRowIsValid(int row, int column){
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if(row &gt;= ROWS){</span>
+<span class="fc" id="L175">            throw new RuntimeException(String.format(&quot;Column %d is full %n&quot;, column));</span>
+        }
+<span class="fc" id="L177">    }</span>
+
+    private void checkIfColumnIsValid(int column){
+<span class="pc bpc" id="L180" title="1 of 4 branches missed.">        if (column &lt; 0 || column &gt;= COLUMNS){</span>
+<span class="fc" id="L181">            throw new RuntimeException(String.format(&quot;Column %d is invalid&quot;, column));</span>
+        }
+<span class="fc" id="L183">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
